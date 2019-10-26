@@ -11,7 +11,7 @@ Last tested on elementary OS 5.0 Juno (20-06-2019) on a Thinkpad X260 and a Xiao
 ```
 sudo apt update
 sudo apt install git
-git clone https://github.com/beukhof1/SPIFEOS-Simple-Post-Installer-For-Elementary-OS.git
+git clone https://github.com/beukhof1/SPIFEOS.git
 cd elementary-post-install
 chmod +x elementary-post-install.sh
 sudo ./elementary-post-install.sh
