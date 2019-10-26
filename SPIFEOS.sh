@@ -1,14 +1,15 @@
 clear
 
-if [[ $(id -u) -ne 0 ]] ; then echo "Please run as root" ; exit 1 ; fi
+echo "\e[34mWhen people get too chummy with me I like to call them by the wrong name to let them know I don't really care about them. "
+
+echo   "\e[34m  — Ron Swanson (Nick Offerman)"
 
 cd /tmp
 
-echo -e "\e[34mWelcome back commander"
-echo -e "\e[92mStarting script now"
-echo -e "\e[91mMade with ♥ for \e[1mElementaryOS 5.0"
+echo "\e[92mStarting script now"
+echo "\e[91mMade with ♥ for \e[1mElementaryOS 5.0"
 
-echo "★彡 Enable add-apt-repository 彡★"
+echo "★彡 Enable add-apt-repository  彡★"
 sudo apt update
 sudo apt install -y software-properties-common
 echo
@@ -36,10 +37,13 @@ echo
 
 echo "★彡 Install packages 彡★"
 
+echo "Install gitkraken"
+wget https://release.gitkraken.com/linux/gitkraken-amd64.deb
+dpkg -i gitkraken-amd64.deb
+sudo apt install --fix-missing -f -y
+
 echo "Install git"
 sudo apt install -y git
-#echo "Install Nvidia Drivers"
-#sudo apt install -y nvidia-driver-390
 echo "Install Timeshift"
 sudo apt install -y timeshift
 echo "Install Node & Npm"
@@ -56,9 +60,6 @@ echo "Install Gnome system monitor"
 sudo apt install -y gnome-system-monitor
 echo "Install Simple Screen Recorder"
 sudo apt install -y simplescreenrecorder
-echo "Install Hack Font"
-sudo apt install -y fonts-hack-ttf
-gsettings set org.gnome.desktop.interface monospace-font-name "Hack 10"
 echo "Install Git"
 sudo apt install -y git
 echo "Install Adb and Fastboot"
@@ -85,8 +86,6 @@ echo "Install Sublime Text"
 sudo snap install sublime-text --classic
 echo "Install Insomnia"
 sudo snap install -y insomnia
-echo "Install elementary-x Theme"
-sudo git clone https://github.com/surajmandalcell/elementary-x.git /usr/share/themes/elementary-x
 echo "Install Solaar"
 sudo apt install -y solaar
 echo "Install TheFuck"
@@ -117,6 +116,29 @@ echo
 
 mkdir ~/.templates
 
+echo "★彡 Look and feel 彡★"
+
+sudo apt install -y gnome-themes-standard-data gtk2-engines-murrine gtk2-engines-pixbuf
+
+echo "Install Hack Font"
+sudo apt install -y fonts-hack-ttf
+echo "Install elementary-x Theme"
+sudo git clone https://github.com/surajmandalcell/elementary-x.git /usr/share/themes/elementary-x
+
+git clone https://github.com/vinceliuice/Qogir-theme.git
+cd Qogir-theme
+sudo chmod +x install.sh
+sudo ./install.sh -g -c dark -t standard
+cd ~
+
+gsettings set org.gnome.desktop.interface monospace-font-name "Hack 10"
+gsettings set net.launchpad.plank.dock.settings:/net/launchpad/plank/docks/dock1/ theme 'Transparent'
+gsettings set org.pantheon.desktop.gala.appearance button-layout 'close,minimize,maximize'
+
+gsettings set org.gnome.mutter overlay-key "'Super_L'"
+gsettings set org.pantheon.desktop.gala.behavior overlay-action "'wingpanel --toggle-indicator=app-launcher'"
+
+echo "★彡 OS configs 彡★"
 gsettings set apps.light-locker lock-on-suspend false
 gsettings set apps.light-locker lock-after-screensaver 0
 
@@ -138,7 +160,7 @@ gsettings set org.gnome.gnome-system-monitor.proctree col-14-visible true # Comm
 gsettings set org.gnome.gnome-system-monitor.proctree columns-order '[0,12,1,8,15,21,14]'
 gsettings set org.gnome.gnome-system-monitor.proctree sort-col 15 # Memory
 
-gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled true
+gsettings set org.gnome.settings-daemon.plugins.color night-light-enabled false
 gsettings set org.gnome.settings-daemon.plugins.color night-light-temperature 5000
 gsettings set org.gnome.settings-daemon.plugins.power sleep-inactive-ac-timeout 0
 
@@ -161,8 +183,12 @@ sudo sed -i '/swapfile/d' /etc/fstab
 sudo swapoff /swapfile
 sudo rm /swapfile
 
+echo "★彡 Deep clean :-P 彡★"
+rm ./gitkraken-amd64.deb
+
 sudo sh -c 'echo "DefaultTimeoutStartSec=10s" >> /etc/systemd/system.conf'
 sudo sh -c 'echo "DefaultTimeoutStopSec=10s" >> /etc/systemd/system.conf'
+
 
 sleep 5
 
